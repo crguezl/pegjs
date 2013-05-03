@@ -1,6 +1,9 @@
 describe("generated parser", function() {
   function vary(names, block) {
-    var values = { cache: [false, true] };
+    var values = {
+          cache:    [false, true],
+          optimize: ["speed", "size"]
+        };
 
     function varyStep(names, options) {
       var clonedOptions = {}, key, name, i;
@@ -32,7 +35,7 @@ describe("generated parser", function() {
   }
 
   function varyAll(block) {
-    vary(["cache"], block);
+    vary(["cache", "optimize"], block);
   }
 
   beforeEach(function() {
@@ -88,7 +91,7 @@ describe("generated parser", function() {
           };
         }
 
-        var result, key;
+        var result;
 
         try {
           result = this.actual.parse(input, options);
@@ -103,6 +106,12 @@ describe("generated parser", function() {
 
           return false;
         } catch (e) {
+          /*
+           * Should be at the top level but then JSHint complains about bad for
+           * in variable.
+           */
+          var key;
+
           if (this.isNot) {
             this.message = function() {
               return "Expected " + jasmine.pp(input)
@@ -169,6 +178,33 @@ describe("generated parser", function() {
             ].join("\n"), options);
 
         expect(parser).toParse("a", 42);
+      });
+
+      it("can use the |text| function", function() {
+        var parser = PEG.buildParser([
+              '{ var result = text(); }',
+              'start = "a" { return result; }'
+            ].join("\n"), options);
+
+        expect(parser).toParse("a", "");
+      });
+
+      it("can use the |offset| function to get the current parse position", function() {
+        var parser = PEG.buildParser([
+              '{ var result = offset(); }',
+              'start = "a" { return result; }'
+            ].join("\n"), options);
+
+        expect(parser).toParse("a", 0);
+      });
+
+      it("can use the |line| and |column| functions to get the current line and column", function() {
+        var parser = PEG.buildParser([
+              '{ var result = [line(), column()]; }',
+              'start = "a" { return result; }'
+            ].join("\n"), options);
+
+        expect(parser).toParse("a", [1, 1]);
       });
 
       it("can use options passed to the parser", function() {
@@ -253,6 +289,15 @@ describe("generated parser", function() {
         var parser = PEG.buildParser('start = a:"a" { return a; }', options);
 
         expect(parser).toParse("a", "a");
+      });
+
+      it("can use the |text| function to get the text matched by the expression", function() {
+        var parser = PEG.buildParser(
+              'start = "a" "b" "c" { return text(); }',
+              options
+            );
+
+        expect(parser).toParse("abc", "abc");
       });
 
       it("can use the |offset| function to get the current parse position", function() {
@@ -425,6 +470,15 @@ describe("generated parser", function() {
         expect(parser).toParse("a", ["a", ""]);
       });
 
+      it("can use the |text| function", function() {
+        var parser = PEG.buildParser(
+              'start = "a" &{ return text() === ""; }',
+              options
+            );
+
+        expect(parser).toParse("a", ["a", ""]);
+      });
+
       it("can use the |offset| function to get the current parse position", function() {
         var parser = PEG.buildParser(
               'start = "a" &{ return offset() === 1; }',
@@ -501,6 +555,15 @@ describe("generated parser", function() {
       it("can use label variables", function() {
         var parser = PEG.buildParser(
               'start = a:"a" !{ return a !== "a"; }',
+              options
+            );
+
+        expect(parser).toParse("a", ["a", ""]);
+      });
+
+      it("can use the |text| function", function() {
+        var parser = PEG.buildParser(
+              'start = "a" !{ return text() !== ""; }',
               options
             );
 
@@ -770,7 +833,14 @@ describe("generated parser", function() {
         });
 
         it("removes duplicates from expected strings", function() {
-          var parser = PEG.buildParser('start = "a" / "a"', options);
+          /*
+           * There was a bug in the code that manifested only with three
+           * duplicates. This is why the following test uses three choices
+           * instead of seemingly sufficient two.
+           *
+           * See https://github.com/dmajda/pegjs/pull/146.
+           */
+          var parser = PEG.buildParser('start = "a" / "a" / "a"', options);
 
           expect(parser).toFailToParse("b", { expected: ['"a"'] });
         });

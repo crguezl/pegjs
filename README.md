@@ -77,6 +77,12 @@ You can tweak the generated parser with several options:
     time in pathological cases but making the parser slower
   * `--allowed-start-rules` — comma-separated list of rules the parser will be
     allowed to start parsing from (default: the first rule in the grammar)
+  * `--plugin` — makes PEG.js use a specified plugin (can be specified multiple
+    times)
+  * `--extra-options` — additional options (in JSON format) to pass to
+    `PEG.buildParser`
+  * `--extra-options-file` — file with additional options (in JSON format) to
+    pass to `PEG.buildParser`
 
 ### JavaScript API
 
@@ -108,6 +114,9 @@ object to `PEG.buildParser`. The following options are supported:
   * `output` — if set to `"parser"`, the method will return generated parser
     object; if set to `"source"`, it will return parser source code as a string
     (default: `"parser"`)
+  * `optimize`— selects between optimizing the generated parser for parsing
+    speed (`"speed"`) or code size (`"size"`) (default: `"speed"`)
+  * `plugins` — plugins to use
 
 Using the Parser
 ----------------
@@ -345,6 +354,9 @@ preceding expression. The action can return `null` to indicate a match failure.
 The code inside the action can access all variables and functions defined in the
 initializer at the beginning of the grammar. Curly braces in the action code
 must be balanced.
+
+The code inside the action can also access the string matched by the expression
+using the `text` function.
 
 The code inside the action can also access the parse position at the beginning
 of the action's expression using the `offset` function. It returns a zero-based
