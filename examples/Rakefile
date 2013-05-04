@@ -10,3 +10,8 @@ desc "Run and use the parser generated from arithmetics.pegjs"
 task :run => :compile do
   sh "node main.js"
 end
+
+desc "Compile arithmetics.pegjs browser version"
+task :web do
+  sh "#{PEGJS} -e calculator arithmetics.pegjs"
+end

@@ -7,18 +7,28 @@ start
   = additive
 
 additive
-  = left:multiplicative "+" right:additive { return left + right; }
-  / left:multiplicative "-" right:additive { return left - right; }
+  = left:multiplicative PLUS right:additive { return left + right; }
+  / left:multiplicative MINUS right:additive { return left - right; }
   / multiplicative
 
 multiplicative
-  = left:primary "*" right:multiplicative { return left * right; }
-  / left:primary "/" right:multiplicative { return left / right; }
+  = left:primary MULT right:multiplicative { return left * right; }
+  / left:primary DIV right:multiplicative { return left / right; }
   / primary
 
 primary
   = integer
-  / "(" additive:additive ")" { return additive; }
+  / LEFTPAR additive:additive RIGHTPAR { return additive; }
 
 integer "integer"
-  = digits:$[0-9]+ { return parseInt(digits, 10); }
+  = _ digits:$[0-9]+ _ { return parseInt(digits, 10); }
+
+_ = $[ \t\n\r]*
+
+PLUS = _"+"_
+MINUS = _"-"_
+MULT = _"*"_
+DIV = _"/"_
+LEFTPAR = _"("_
+RIGHTPAR = _")"_
+
