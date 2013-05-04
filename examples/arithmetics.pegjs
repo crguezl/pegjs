@@ -21,7 +21,7 @@ primary
   / LEFTPAR additive:additive RIGHTPAR { return additive; }
 
 integer "integer"
-  = _ digits:$[0-9]+ _ { return parseInt(digits, 10); }
+  = NUMBER
 
 _ = $[ \t\n\r]*
 
@@ -31,4 +31,4 @@ MULT = _"*"_
 DIV = _"/"_
 LEFTPAR = _"("_
 RIGHTPAR = _")"_
-
+NUMBER = _ digits:$[0-9]+ _ { return parseInt(digits, 10); }
