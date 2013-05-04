@@ -8,10 +8,12 @@ start
 
 additive
   = left:multiplicative "+" right:additive { return left + right; }
+  / left:multiplicative "-" right:additive { return left - right; }
   / multiplicative
 
 multiplicative
   = left:primary "*" right:multiplicative { return left * right; }
+  / left:primary "/" right:multiplicative { return left / right; }
   / primary
 
 primary

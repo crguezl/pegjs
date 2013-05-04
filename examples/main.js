@@ -1,3 +1,3 @@
-var PEG = require("./arithmetics-parser.js");
-var r = PEG.parse("2+3*8");
+var PEG = require("./arithmetics.js");
+var r = PEG.parse("(2+9-1)/2");
 console.log(r);
