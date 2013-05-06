@@ -1,6 +1,6 @@
 #!/usr/local/bin/node
+var rep = '/Users/casiano/Dropbox/src/javascript/PLgrado/pegjs/';
 var fs = require('fs');
-//var sys = require('sys');
 
 
 var arguments = process.argv.splice(2);
@@ -17,7 +17,7 @@ var libc = new FFI.Library(null, {
 var run = libc.system;
 
 function compile() {
-    var PEG = require(module);
+    var PEG = require(module+'.js');
     //console.log(PEG);
     if (input) {
       input = input.toString().trim();
@@ -32,7 +32,7 @@ fs.exists(module+".js", function(exists) {
     compile();
   } else {
     console.log("Can't find "+module+".js Compiling "+module+'.pegjs');
-    run("../bin/pegjs "+module+'.pegjs');
+    run(rep+"bin/pegjs "+module+'.pegjs');
     compile();
   }
 });
