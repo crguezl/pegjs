@@ -1,15 +1,11 @@
-/*
-Begin ← '(*'
-End   ← '*)'
-C     ← Begin N* End
-N     ← C / (!Begin !End Z)
-Z     ← any single character
-*/
+/* Pascal nested comments */
 
 P     =   prog:N+                          { return prog; }
-N     =   C 
+N     =   chars:$(!Begin ANY)+             { return chars;}
+        / C
+C     = Begin chars:T* End                 { return chars.join(''); }
+T     =   C 
         / (!Begin !End char:ANY)           { return char;}
-C     = Begin chars:N* End                 { return chars.join(''); }
 Begin = '(*'
 End   = '*)'
 ANY   =   'z'    /* any character */       { return 'z';  }
