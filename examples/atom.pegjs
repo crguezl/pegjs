@@ -5,5 +5,4 @@ validchar
     = [0-9a-zA-Z_?!+\-=@#$%^&*/.]
 
 atom =
-    chars:validchar+
-        { return chars.join(""); }
+    chars:$validchar+

@@ -16,8 +16,7 @@ var libc = new FFI.Library(null, {
 });
 var run = libc.system;
 
-fs.exists(module+".js", function(exists) {
-  if (exists) {
+function compile() {
     var PEG = require(module);
     //console.log(PEG);
     if (input) {
@@ -26,8 +25,14 @@ fs.exists(module+".js", function(exists) {
       var r = PEG.parse(input);
       console.log("result = "+JSON.stringify(r));
     }
+}
+
+fs.exists(module+".js", function(exists) {
+  if (exists) {
+    compile();
   } else {
     console.log("Can't find "+module+".js Compiling "+module+'.pegjs');
     run("../bin/pegjs "+module+'.pegjs');
+    compile();
   }
 });
