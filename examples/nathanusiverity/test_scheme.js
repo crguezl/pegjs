@@ -9,6 +9,20 @@ console.log(data);
 // Create my parser
 var parse = PEG.buildParser(data).parse;
 // Do a test
-r = parse("(a b c)");
+
+var input = "(a b c)";
+var r = parse(input);
 console.log(r);
 assert.deepEqual( r, ["a", "b", "c"] );
+
+input = "(+ 1 (* x 3))";
+r = parse(input);
+console.log(r);
+assert.deepEqual( r, ["+","1",["*","x","3"]] );
+
+
+input = "(* n (factorial (- n 1)))";
+r = parse(input);
+console.log(r);
+assert.deepEqual( r, ["*","n",["factorial",["-","n","1"]]] );
+
