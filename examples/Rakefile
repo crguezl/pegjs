@@ -15,3 +15,9 @@ desc "Compile arithmetics.pegjs browser version"
 task :web do
   sh "#{PEGJS} -e calculator arithmetics.pegjs"
 end
+
+desc "Compile and run anbncn"
+task :anbncn do
+  sh "#{PEGJS} anbncn.pegjs"
+  sh "node use_anbncn.js"
+end

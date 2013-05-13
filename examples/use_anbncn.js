@@ -1,13 +1,18 @@
 var PEG = require("./anbncn.js");
-var r = PEG.parse("aabbcc");
-console.log(r);
+var inputs = ["aabbcc", 
+              "aabbc",     // error
+              "aaabbbccc"
+             ];
 
-try {
-  r = PEG.parse("aabbc");
-  console.log(r);
-}
-catch (e) {
-  console.log("Grr...."+e);
+for(var i = 0; i < inputs.length; i++) {
+  var input = inputs[i];
+  try {
+    var r = PEG.parse(input);
+    console.log("ok "+JSON.stringify(r));
+  }
+  catch (e) {
+    console.log("Grr...."+e);
+  }
 }
 
 
