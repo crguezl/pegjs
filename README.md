@@ -25,6 +25,9 @@ Getting Started
 parser. Just enter your grammar, try parsing few inputs, and download generated
 parser code.
 
+See also 
+[GitHub page of this repo](http://crguezl.github.io/pegjs/).
+
 Installation
 ------------
 
