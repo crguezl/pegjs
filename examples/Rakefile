@@ -1,0 +1,23 @@
+PEGJS = "../bin/pegjs"
+task :default => :run
+
+desc "Compile arithmetics.pegjs"
+task :compile do
+  sh "#{PEGJS} arithmetics.pegjs"
+end
+
+desc "Run and use the parser generated from arithmetics.pegjs"
+task :run => :compile do
+  sh "node main.js"
+end
+
+desc "Compile arithmetics.pegjs browser version"
+task :web do
+  sh "#{PEGJS} -e calculator arithmetics.pegjs"
+end
+
+desc "Compile and run anbncn"
+task :anbncn do
+  sh "#{PEGJS} anbncn.pegjs"
+  sh "node use_anbncn.js"
+end
