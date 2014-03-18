@@ -21,3 +21,9 @@ task :anbncn do
   sh "#{PEGJS} anbncn.pegjs"
   sh "node use_anbncn.js"
 end
+
+desc "Compile and run intermedia"
+task :intermedia do
+  sh "#{PEGJS} intermedia.pegjs"
+  sh "node main_intermedia.js"
+end
