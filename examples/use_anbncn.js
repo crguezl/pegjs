@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 var PEG = require("./anbncn.js");
 
-if (process.argv.length > 1) {
+if (process.argv.length > 2) {
   try {
     var r = PEG.parse(process.argv[2]);
     console.log("ok "+JSON.stringify(r));
@@ -9,7 +9,7 @@ if (process.argv.length > 1) {
   catch (e) {
     console.log("Grr...."+e);
   }
-  return 0;
+  process.exit(0);
 }
 var inputs = ["aabbcc", 
               "aabbc",     // error
