@@ -2,7 +2,7 @@
 PEG = require 'pegjs'
 coffee = require 'pegjs-coffee-plugin'
 grammar = """
-a = 'hello' _ b { console.log 1 }
+a = 'hello' _ b { console.log 1; "hello world!" }
 b = 'world'     { console.log 2 }
 _ = [ \t]+      { console.log 3 }
 """

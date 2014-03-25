@@ -27,3 +27,9 @@ task :intermedia do
   sh "#{PEGJS} intermedia.pegjs"
   sh "node main_intermedia.js"
 end
+
+desc "Compile and run pascal_comments"
+task :nestedcomments do
+  sh "../bin/pegjs pascal_comments.pegjs"
+  sh "node use_pascal_comments.js"
+end

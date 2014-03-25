@@ -3,7 +3,7 @@
 P     =   prog:N+                          { return prog; }
 N     =   chars:$(!Begin ANY)+             { return chars;}
         / C
-C     = Begin chars:T* End                 { return chars.join(''); }
+C     = Begin chars:$T* End                 { return "C: "+chars; }
 T     =   C 
         / (!Begin !End char:ANY)           { return char;}
 Begin = '(*'

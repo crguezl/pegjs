@@ -1,5 +1,5 @@
 var PEG = require("pegjs");
-var grammar = "a = 'hello' b\nb = 'world'"; //"a = 'hello' b\nb='world';
+var grammar = "a = 'hello' b\nb = 'world'"; 
 console.log(grammar);
 
 var parser = PEG.buildParser(grammar,{ allowedStartRules: ['a', 'b'] });
@@ -17,4 +17,13 @@ try {
 catch(e) {
   console.log("Error!!!!");
   console.log(e);
+    /*
+    { message: 'Expected "hello" but "w" found.',
+      expected: [ { type: 'literal', value: 'hello', description: '"hello"' } ],
+      found: 'w',
+      offset: 0,
+      line: 1,
+      column: 1,
+      name: 'SyntaxError' }
+    */
 }
