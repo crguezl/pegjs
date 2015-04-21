@@ -1,5 +1,8 @@
 var PEG = require("pegjs");
 var grammar = "a = 'hello' b\nb = 'world'"; 
+      // a = 'hello' b
+      // b = 'world'
+
 console.log(grammar);
 
 var parser = PEG.buildParser(grammar,{ allowedStartRules: ['a', 'b'] });
