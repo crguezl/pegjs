@@ -1,9 +1,16 @@
-start = __ $[0-9]+ __
+__ = (whitespace / eol / comment)*
 
-__ = $(whitespace / eol /singleLineComment)*
+/* Modeled after ECMA-262, 5th ed., 7.4. */
+comment "comment"
+  = singleLineComment
+  / multiLineComment
 
 singleLineComment
-  = "//" (!eolChar .)*
+  = "//" (!eolChar .)*   { return text(); }
+
+multiLineComment
+  = "/*" (!"*/" .)* "*/" { return text(); }
+
 
 /* Modeled after ECMA-262, 5th ed., 7.3. */
 eol "end of line"
