@@ -2,17 +2,19 @@
  * Classic example grammar, which recognizes simple arithmetic expressions like
  * "2*(3+4)". The parser generated from this grammar then computes their value.
  */
-{
-util = require('util');
-}
+
 start
   = additive
 
 additive
-  =  first:primary rest:(MINUS primary)* {  
-       console.log(first+"\n"+util.inspect(rest));
-      
-   }
+  = left:multiplicative PLUS right:additive { return left + right; }
+  / left:multiplicative MINUS right:additive { return left - right; }
+  / multiplicative
+
+multiplicative
+  = left:primary MULT right:multiplicative { return left * right; }
+  / left:primary DIV right:multiplicative { return left / right; }
+  / primary
 
 primary
   = integer
@@ -24,9 +26,9 @@ integer "integer"
 _ = $[ \t\n\r]*
 
 PLUS = _"+"_
-MINUS = _ minus:"-" _  { return '-'; }
+MINUS = _"-"_
 MULT = _"*"_
-DIV = _ div:"/"_       { return '/'; }
+DIV = _"/"_
 LEFTPAR = _"("_
 RIGHTPAR = _")"_
 NUMBER = _ digits:$[0-9]+ _ { return parseInt(digits, 10); }
