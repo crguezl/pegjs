@@ -14,7 +14,7 @@ $(document).ready(function() {
     r.onload = function(e) { 
       var contents = e.target.result;
       
-      input.innerHTML = contents;
+      input.value = contents;
     }
     r.readAsText(f);
   });
