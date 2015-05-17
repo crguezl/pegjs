@@ -1,13 +1,10 @@
-sum   = left:value right:('-' value)* 
-     { 
-        s = left
-        right.forEach((x)->
-            n = x[1]
-            s -= n
-        )
-        s
-     }
-value   = number:$[0-9]+            { parseInt(number,10); }
-        / '(' sum:sum ')'           { sum }
+sum    = left:number right:('-' number)* 
+           { 
+              s = left
+              right.forEach (x)-> s -= x[1]
+              s
+           }
+number = n:$[0-9]+           { Number n }
+        / '(' sum:sum ')'      { sum }
 
 
