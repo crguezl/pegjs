@@ -5,6 +5,6 @@ sum    = left:number right:('-' number)*
               s
            }
 number = n:$[0-9]+           { Number n }
-        / '(' sum:sum ')'      { sum }
+        / '(' sum:sum ')'    { sum }
 
 
