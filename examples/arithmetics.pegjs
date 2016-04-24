@@ -8,18 +8,17 @@ start
 
 additive
   = left:multiplicative PLUS right:additive { return left + right; }
-  / left:multiplicative MINUS right:additive { return left - right; }
   / multiplicative
 
 multiplicative
   = left:primary MULT right:multiplicative { return left * right; }
-  / left:primary DIV right:multiplicative { return left / right; }
   / primary
 
 primary
   = integer
   / LEFTPAR additive:additive RIGHTPAR { return additive; }
 
+/* A rule can also contain human-readable name that is used in error messages (in our example, only the integer rule has a human-readable name). */
 integer "integer"
   = NUMBER
 
