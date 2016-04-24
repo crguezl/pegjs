@@ -5,15 +5,14 @@ Sum     ← Product (('+' / '-') Product)*
 Expr    ← Sum
 */
 { 
+  const util = require('util');
+
   function reduce(left, right) {
-    // console.log(left); 
-    // console.log(right); 
+    console.log(`left = ${util.inspect(left)} right = ${util.inspect(right)}`); 
     var sum = left;
     // console.log("sum = "+sum);
-    for(var i = 0; i < right.length;i++) {
-      var t = right[i];
-      var op = t[0];
-      var num = t[1];
+    for(let i = 0; i < right.length;i++) {
+      let [op, num] = right[i]; // node --harmony_destructuring
       // console.log(op);
       // console.log(num);
       eval(`sum ${op}= num`);
