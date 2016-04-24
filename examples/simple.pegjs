@@ -11,8 +11,8 @@ Expr    ← Sum
     console.log(`left = ${util.inspect(left)} right = ${util.inspect(right)}`); 
     var sum = left;
     // console.log("sum = "+sum);
-    for(let i = 0; i < right.length;i++) {
-      let [op, num] = right[i]; // node --harmony_destructuring
+    right.forEach((r,_) => {
+      let [op, num] = r; // node --harmony_destructuring
       // console.log(op);
       // console.log(num);
       eval(`sum ${op}= num`);
@@ -26,7 +26,7 @@ Expr    ← Sum
       }
       */
       // console.log("sum = "+sum);
-    }
+    });
     return sum;
   }
 }
