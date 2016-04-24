@@ -1,7 +1,8 @@
-var PEG = require("pegjs");
-var grammar = `
+"use strict";
+const PEG = require("pegjs");
+const grammar = `
  {                             
-   var util = require("util");     
+   const util = require("util");     
                                
    var g = "visible variable"; 
    console.log("Inside Initializer! options = "+util.inspect(options)); 
@@ -12,10 +13,10 @@ var grammar = `
 
 console.log("GRAMMAR:\n"+grammar);
 
-var parser = PEG.buildParser(grammar);
+const parser = PEG.buildParser(grammar);
 
 console.log("PARSING 'a'");
-var r = parser.parse("a", { x: 'hello' });
+let r = parser.parse("a", { x: 'hello' });
 console.log(r); 
 console.log("PARSING 'b'");
 r = parser.parse("b");
