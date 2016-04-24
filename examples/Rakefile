@@ -6,9 +6,19 @@ task :compile do
   sh "#{PEGJS} arithmetics.pegjs"
 end
 
+desc "Compile simple_reduce.pegjs"
+task :leftrec do
+  sh "pegjs simple_reduce.pegjs simple.js"
+end
+
 desc "Run and use the parser generated from arithmetics.pegjs"
 task :run => :compile do
   sh "node main.js"
+end
+
+desc "Run and use the parser generated from simple_reduce.pegjs"
+task :runleftrec => :leftrec do
+  sh "./use_simple.js '(4-1-1)/2/2'"
 end
 
 desc "Compile arithmetics.pegjs browser version"
