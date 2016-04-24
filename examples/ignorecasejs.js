@@ -1,18 +1,16 @@
-  var PEG, coffee, grammar, parser, r;
+"use strict"
+const PEG, grammar, parser;
+let r;
 
-  PEG = require('pegjs');
+PEG = require('pegjs');
 
-  grammar = 'start = a:\'a\'i ';
+grammar = `start = a: 'a'i `;
 
-  parser = PEG.buildParser(grammar);
+parser = PEG.buildParser(grammar);
+r = parser.parse('A');
+console.log(r);
 
-  r = parser.parse('A');
-
-  console.log(r);
-
-  parser = PEG.buildParser(grammar);
-
-  r = parser.parse('a');
-
-  console.log(r);
+parser = PEG.buildParser(grammar);
+r = parser.parse('a');
+console.log(r);
 
