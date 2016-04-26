@@ -1,5 +1,4 @@
 browser/*
-examples/*.js
 node_modules/*
 coffee-plugin-examples
 grammar-repository
