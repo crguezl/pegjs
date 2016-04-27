@@ -2,9 +2,21 @@
  * Classic example grammar, which recognizes simple arithmetic expressions like
  * "2*(3+4)". The parser generated from this grammar then computes their value.
  */
+{
+  var util = require('util');
+  var symbolTable = {
+    PI: Math.PI
+  };
+
+}
 
 start
-  = additive
+  = assign { console.log(util.inspect(symbolTable,{ depth: null})); }
+
+assign
+  = id:ID ASSIGN a:additive {
+         symbolTable[id] = a;
+      }
 
 additive
   = left:multiplicative rest:(ADDOP multiplicative)* { 
@@ -24,6 +36,7 @@ multiplicative
 
 primary
   = integer
+  / id:ID  { return symbolTable[id]; }
   / LEFTPAR additive:additive RIGHTPAR { return additive; }
 
 /* A rule can also contain human-readable name that is used in error messages (in our example, only the integer rule has a human-readable name). */
@@ -41,3 +54,6 @@ DIV = _"/"_   { return '/'; }
 LEFTPAR = _"("_
 RIGHTPAR = _")"_
 NUMBER = _ digits:$[0-9]+ _ { return parseInt(digits, 10); }
+ID = _ id:$([a-z_]i$([a-z0-9_]i*)) _ { console.log(id); return id; }
+ASSIGN = _ '=' _
+
