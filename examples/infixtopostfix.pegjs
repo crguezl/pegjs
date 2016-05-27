@@ -1,10 +1,8 @@
-{ 
+{  /* pegjs infixtopostfix.pegjs; ./use_infix2postfix.js 2*(3-4)-5 */
   const util = require('util');
 
   function reduce(left, right) {
-    console.log(`left = ${util.inspect(left)} right = ${util.inspect(right)}`); 
     var sum = left;
-    // console.log("sum = "+sum);
     right.forEach((r,_) => {
       let [op, num] = r; // node --harmony_destructuring
        sum += ` ${num} ${op}`;
