@@ -2,11 +2,11 @@ types = type+
 
 type = function / product / array / INT / CHAR
 
-function = F LP ts:type COMMA td:type RP
+function = F LP (!COMMA) ts:type COMMA td:type RP
             {
               return {type: 'F', input: ts, output:td} 
             }
-product = x:X LP t1:type r:(COMMA type)* RP     
+product = x:X LP (!COMMA) t1:type r:(COMMA type)* RP     
             { 
               r = r.map( ([_, t]) => t)
               if (x !== r.length+1) console.error(
