@@ -9,7 +9,9 @@ function = F LP ts:type COMMA td:type RP
 product = x:X LP t1:type r:(COMMA type)* RP     
             { 
               r = r.map( ([_, t]) => t)
-              return {type: x, t: [ t1 ].concat(r)}  
+              if (x[1] !== r.length+1) console.error(
+                `Error in product type expression!: X_${x[1]} but found ${r.length+1} components`);
+              return {type: x[0]+'_'+x[1], t: [ t1 ].concat(r)}  
             }
 array   = a:A LP t:type RP               { return {type: a, t: t}; }
 
@@ -25,5 +27,5 @@ F     = _ 'F' _    { return 'F'; }
 LP    = _ '(' _
 RP    = _ ')' _
 COMMA = _ ',' _
-X     = _ x:$('X_'[0-9]+) _ { return x; }
+X     = _ 'X_' n:$[0-9]+ _ { return ['X', n]; }
 A     = _ a:$('A_'[0-9]+) _ { return a; }
