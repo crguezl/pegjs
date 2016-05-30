@@ -13,7 +13,7 @@ product = x:X LP (!COMMA) t1:type r:(COMMA type)* RP
                 `Error in product type expression!: X_${x} but found ${r.length+1} components`);
               return {type: 'X_'+x, t: [ t1 ].concat(r)}  
             }
-array   = a:A LP t:type RP               { return {type: a, t: t}; }
+array   = a:A LP t:type RP               { return {type: a[0], dimension: a[1], t: t}; }
 
 _ = WhiteSpace*
 WhiteSpace "whitespace"
@@ -28,4 +28,4 @@ LP    = _ '(' _
 RP    = _ ')' _
 COMMA = _ ',' _
 X     = _ 'X_' n:$[0-9]+ _ { return n; }
-A     = _ a:$('A_'[0-9]+) _ { return a; }
+A     = _ 'A_' n:$[0-9]+ _ { return ['A', n]; }
