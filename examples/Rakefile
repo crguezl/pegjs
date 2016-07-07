@@ -43,3 +43,9 @@ task :nestedcomments do
   sh "../bin/pegjs pascal_comments.pegjs"
   sh "node use_pascal_comments.js"
 end
+
+desc "Compile and run typedesclang"
+task :typedesc do
+  sh "../bin/pegjs typedesclang.pegjs"
+  sh "node --harmony_destructuring use_typedesclang.js"
+end
