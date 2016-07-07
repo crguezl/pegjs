@@ -49,3 +49,9 @@ task :typedesc do
   sh "../bin/pegjs typedesclang.pegjs"
   sh "node --harmony_destructuring use_typedesclang.js"
 end
+
+desc "Compile and run typedesclang"
+task :postfix do
+  sh "../bin/pegjs infixtopostfix.pegjs"
+  #sh "./use_infix2postfix.js"
+end
