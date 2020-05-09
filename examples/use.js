@@ -1,12 +1,13 @@
-#!/usr/local/bin/node --harmony_destructuring
+#!/usr/bin/env node
 
-var arguments = process.argv.splice(2);
-//console.log(arguments);
-var module = arguments[0];
-var input  = arguments[1];
+const [peg, input] = process.argv.splice(2);
 
-var parse = require(module).parse;
+const parse = require('./'+peg).parse;
 console.log(`Processing <${input}>`);
-var r = parse(input);
-console.log(r);
+try {
+  const r = parse(input);
+  console.log(r);
+} catch(e) {
+  console.log(e.message)
+}  
 

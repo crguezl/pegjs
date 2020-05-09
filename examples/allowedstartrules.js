@@ -1,4 +1,5 @@
 "use strict";
+const util = require('util');
 const PEG = require("pegjs");
 const grammar = `
   a = 'hello' b
@@ -6,7 +7,7 @@ const grammar = `
 `; 
 console.log(grammar);
 
-const parser = PEG.buildParser(grammar,{ allowedStartRules: ['a', 'b'] });
+const parser = PEG.generate(grammar,{ allowedStartRules: ['a', 'b'] });
 
 let r = parser.parse("helloworld", { startRule: 'a' });
 console.log(r); // [ 'hello', 'world' ]
@@ -22,15 +23,18 @@ try {
 }
 catch(e) {
   r = e;
-  console.log("Error!!!!");
 }
-console.log(r);
+console.log(`The error object:`);
+console.log(util.inspect(r, {depth: null}));
 /*
-{ message: 'Expected "hello" but "w" found.',
-  expected: [ { type: 'literal', value: 'hello', description: '"hello"' } ],
+{
+  message: 'Expected "hello" but "w" found.',
+  expected: [ { type: 'literal', text: 'hello', ignoreCase: false } ],
   found: 'w',
-  offset: 0,
-  line: 1,
-  column: 1,
-  name: 'SyntaxError' }
+  location: {
+    start: { offset: 0, line: 1, column: 1 },
+    end: { offset: 1, line: 1, column: 2 }
+  },
+  name: 'SyntaxError'
+}
 */
