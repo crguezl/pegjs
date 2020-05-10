@@ -1,14 +1,10 @@
-%left 'c'
-%left 'b'
-%right 'a'
-
 %lex
 %%
 .                 { return yytext; }
 /lex
 
 %%
-a:  b 'c'
+A:  B 'c'
 ;
-b: 'b' | 'b' 'a'   
+B: 'b' | 'b' 'a'   
 ;
