@@ -1,21 +1,21 @@
-var PEG = require ("pegjs");
-var grammar1 = `
+const PEG = require ("pegjs");
+const grammar1 = `
 start = "test" / "test ;"
 `;
-var parser = PEG.buildParser(grammar1);
-var input = 'test';
-console.log("OK: "+parser.parse(input));
+let parser = PEG.generate(grammar1);
+let input = 'test';
+console.log("OK: "+parser.parse(input)); // OK: test
 try {
   // This input will not be accepted 
-  var input = 'test ;';
+  const input = 'test ;';
   console.log(parser.parse(input));
 }
-catch (e) {
-  console.log(e);
+catch (e) { // Expected end of input but " " found
+  console.log(e.message);
 }
-var grammar2 = `
+const grammar2 = `
 start = "test" !" ;" / "test ;"
 `;
-var parser = PEG.buildParser(grammar2);
-var input = 'test ;';
-console.log("OK: "+parser.parse(input));
+parser = PEG.generate(grammar2);
+input = 'test ;';
+console.log("OK: "+parser.parse(input)); // OK: test ;
